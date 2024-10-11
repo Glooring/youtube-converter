@@ -249,7 +249,7 @@ Use the following command to create the `main.exe` executable:
 pyinstaller --onedir --name main --hidden-import=helpers.audio_helper --hidden-import=helpers.playlist_helper --hidden-import=helpers.video_helper --hidden-import=helpers.utils --noconsole main.py
 ```
 
-This will create a `dist/` folder containing a `main/` directory, which holds the `main.exe` executable along with the necessary dependencies from `_internal` folder.
+This will create a `dist/` folder containing a `main/` directory, which holds the `main.exe` executable along with the necessary dependencies from the `_internal` folder.
 
 ### 3. Unarchive `ffmpeg.zip`
 
