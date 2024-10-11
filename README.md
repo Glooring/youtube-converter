@@ -227,7 +227,7 @@ Once the application is launched, you’ll see three options in the main interfa
 
    #### Example Screenshot:
    
-   <img src="screenshots/video_download_progress_bar.png" width="270">
+   <img src="screenshots/video_download_progress_bar.png" width="280">
 
 6. **Completion**: The video and audio streams are downloaded, merged, and saved as an MP4 file.
 
