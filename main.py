@@ -337,15 +337,15 @@ audio_button = tk.Button(
 )
 audio_button.pack(pady=10)
 
-playlist_button = tk.Button(
-    window, text="Playlist link", command=run_playlist_script, width=20, height=2
-)
-playlist_button.pack(pady=10)
-
 video_button = tk.Button(
     window, text="Simple link to video", command=run_video_script, width=20, height=2
 )
 video_button.pack(pady=10)
+
+playlist_button = tk.Button(
+    window, text="Playlist link", command=run_playlist_script, width=20, height=2
+)
+playlist_button.pack(pady=10)
 
 # Bind the close event to the on_closing function
 window.protocol("WM_DELETE_WINDOW", on_closing)

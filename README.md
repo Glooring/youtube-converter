@@ -158,8 +158,8 @@ If you want to run the project in script mode for development purposes, follow t
 Once the application is launched, you’ll see three options in the main interface:
 
 - **Simple link to audio**: Download an audio file (MP3) from a YouTube video.
-- **Simple link to video**: Download the highest resolution video from a YouTube video link.
-- **Playlist link**: Download an entire YouTube playlist as either audio or video.
+- **Simple link to video**: Download the preferred resolution video from a YouTube video link.
+- **Playlist link**: Download an entire YouTube playlist as either audio or video, with videos in the highest available resolution.
 
    #### Example Screenshot:
    <img src="screenshots/gui_home.png" width="260">
@@ -186,28 +186,7 @@ Once the application is launched, you’ll see three options in the main interfa
 
 ---
 
-### 3. Downloading a YouTube Playlist
-
-1. **Click on "Playlist link"**: This opens the playlist download window.
-
-   #### Example Screenshot:
-   
-   <img src="screenshots/playlist_download.png" width="320">
-
-2. **Enter the playlist URL**: Paste the link of the playlist.
-3. **Choose download type**: Select either MP3 (audio) or MP4 (video) for the entire playlist.
-4. **Select the folder**: Choose where to save the playlist files.
-5. **Download process**: The application downloads and processes each file in the playlist, showing progress for each.
-
-   #### Example Screenshot:
-   
-   <img src="screenshots/playlist_download_progress_bar.png" width="320">
-   
-6. **Completion**: Once complete, the Playlist folder will be saved in the selected folder.
-
----
-
-### 4. Downloading Video from a YouTube Link
+### 3. Downloading Video from a YouTube Link
 
 1. **Click on "Simple link to video"**: Opens the video download window.
 
@@ -230,6 +209,27 @@ Once the application is launched, you’ll see three options in the main interfa
    <img src="screenshots/video_download_progress_bar.png" width="280">
 
 6. **Completion**: The video and audio streams are downloaded, merged, and saved as an MP4 file.
+
+---
+
+### 4. Downloading a YouTube Playlist
+
+1. **Click on "Playlist link"**: This opens the playlist download window.
+
+   #### Example Screenshot:
+   
+   <img src="screenshots/playlist_download.png" width="320">
+
+2. **Enter the playlist URL**: Paste the link of the playlist.
+3. **Choose download type**: Select either MP3 (audio) or MP4 (video) for the entire playlist.
+4. **Select the folder**: Choose where to save the playlist files.
+5. **Download process**: The application downloads and processes each file in the playlist, showing progress for each.
+
+   #### Example Screenshot:
+   
+   <img src="screenshots/playlist_download_progress_bar.png" width="320">
+   
+6. **Completion**: Once complete, the Playlist folder will be saved in the selected folder.
 
 ---
 
