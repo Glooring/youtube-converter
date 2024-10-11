@@ -162,7 +162,7 @@ Once the application is launched, you’ll see three options in the main interfa
 - **Playlist link**: Download an entire YouTube playlist as either audio or video, with videos in the highest available resolution. A list of all YouTube links and titles will be generated in the same folder where the files are downloaded.
 
    #### Example Screenshot:
-   <img src="screenshots/gui_home.png" width="260">
+   <img src="screenshots/gui_home_v2.png" width="260">
 
 ---
 
