@@ -159,7 +159,7 @@ Once the application is launched, you’ll see three options in the main interfa
 
 - **Simple link to audio**: Download an audio file (MP3) from a YouTube video.
 - **Simple link to video**: Download the preferred resolution video from a YouTube video link.
-- **Playlist link**: Download an entire YouTube playlist as either audio or video, with videos in the highest available resolution.
+- **Playlist link**: Download an entire YouTube playlist as either audio or video, with videos in the highest available resolution. A list of all YouTube links and titles will be generated in the same folder where the files are downloaded.
 
    #### Example Screenshot:
    <img src="screenshots/gui_home.png" width="260">
