@@ -18,47 +18,6 @@ The **YouTube Converter** is a powerful and easy-to-use desktop application desi
 
 ---
 
-## Project Structure
-
-The project is divided into several components for better organization and modularity. The overall structure is:
-
-```
-YouTube-Converter/
-│
-├── main.py                      # Main script to launch the application
-├── release                      # Folder for release build
-├── helpers/                     # Folder containing helper modules
-│   ├── ffmpeg/                      # FFmpeg folder (for development mode
-│   │	└── ffmpeg.exe               # FFmpeg executable (unzip ffmpeg.zip here))
-│   ├── audio_helper.py          # Handles audio downloads and conversion
-│   ├── video_helper.py          # Manages video downloads and resolution selection
-│   ├── playlist_helper.py       # Handles playlist downloads (both video and audio)
-│   └── utils.py                 # Utility functions (file sanitization, ffmpeg paths, etc.)
-├── screenshots                  # Folder containing screenshots for the README
-├── LICENSE                      # MIT License
-├── README.md                    # Project documentation (this file)
-└── requirements.txt             # Python dependencies for development purposes
-```
-
-### Release Folder Structure
-
-The release folder is structured as follows:
-
-```
-release/
-│
-├── main.exe                     # The standalone executable
-├── _internal/                   # Internal folder containing necessary dependencies
-│   ├── helpers/
-│   │   └── ffmpeg/
-│   │       └── ffmpeg.exe       # FFmpeg executable (unzip ffmpeg.zip here)
-│   └── (other dependencies)
-```
-
-The **release/main.exe** is the pre-built executable file that users can download and run directly. It includes **ffmpeg.zip**, which **must be unarchived** to use FFmpeg for media processing.
-
----
-
 ## Requirements (For Development)
 
 If you're working in development mode, you need to install some dependencies via `pip`. However, **FFmpeg is already included** in the project in a zipped format (`ffmpeg.zip`), so no need to install it manually. Simply unzip the `ffmpeg.zip` file as instructed below.
@@ -72,7 +31,7 @@ pytubefix==7.3.0
 ### Explanation
 
 - **`pytubefix`** is the only external library that needs to be installed because all other modules (like `tkinter`, `subprocess`, `os`, `threading`, etc.) are part of Python's standard library.
-- You don't need to install **FFmpeg** separately, as it’s included in the project as `ffmpeg.zip`, which needs to be unzipped in both the `ffmpeg/` folder for development mode and in the `release/` folder for the executable.
+- You don't need to install **FFmpeg** separately, as it’s included in the project as `ffmpeg.zip`, which needs to be unzipped in both the `ffmpeg/` folder for development mode.
 
 Install the required libraries using:
 
@@ -84,31 +43,18 @@ pip install -r requirements.txt
 
 ## Installation and Setup
 
-### 1. **For All Users: Run `main.exe`**  
+### 1. **For All Users: Run `main.exe`**
 
-Whether you're a regular user or developer, you can run the application with the provided `.exe` file. There is no requirement for Python or additional setup. Simply follow these steps:
+Whether you're a regular user or developer, you can run the application without any additional setup. Just follow these steps:
 
-1. **Download the Project Archive**  
-   Download the entire project archive from the repository, which includes the `release` folder containing `main.exe` and all necessary internal dependencies.
+1. **Download the Application**  
+   Download the latest release from the [release page](https://github.com/Glooring/youtube-converter/releases/latest) or directly using [this link](https://github.com/Glooring/youtube-converter/releases/download/v1.0.0/youtube-converter-v1.0.0-release.zip).
 
-2. **Unarchive `ffmpeg.zip`**  
-   Inside the `release` folder, navigate to the following path:  
-   `release/_internal/helpers/ffmpeg/`.  
-   You'll find a file named `ffmpeg.zip`. Unzip this file to ensure that `ffmpeg.exe` is available for the application to function properly.
-
-   After unarchiving, the folder structure should look like this:
-
-   ```
-   release/
-   └── _internal/
-       └── helpers/
-           └── ffmpeg/
-               └── ffmpeg.exe
-   ```
+2. **Unzip the File**  
+   Extract the contents of the downloaded ZIP file.
 
 3. **Run the Application**  
-   Once the `ffmpeg.exe` is properly placed, you're ready to go!  
-   Simply double-click `main.exe` inside the `release/` folder to launch the YouTube Converter.
+   Open the extracted folder and double-click `main.exe` to launch the YouTube Converter.
 
 ---
 
@@ -230,6 +176,29 @@ Once the application is launched, you’ll see three options in the main interfa
    <img src="screenshots/playlist_download_progress_bar.png" width="320">
    
 6. **Completion**: Once complete, the Playlist folder will be saved in the selected folder.
+
+---
+
+## Project Structure
+
+The project is divided into several components for better organization and modularity. The overall structure is:
+
+```
+YouTube-Converter/
+│
+├── helpers/                     # Folder containing helper modules
+│   ├── ffmpeg/                      # FFmpeg folder (for development mode
+│   │	└── ffmpeg.exe               # FFmpeg executable (unzip ffmpeg.zip here))
+│   ├── audio_helper.py          # Handles audio downloads and conversion
+│   ├── video_helper.py          # Manages video downloads and resolution selection
+│   ├── playlist_helper.py       # Handles playlist downloads (both video and audio)
+│   └── utils.py                 # Utility functions (file sanitization, ffmpeg paths, etc.)
+├── screenshots                  # Folder containing screenshots for the README
+├── LICENSE                      # MIT License
+├── README.md                    # Project documentation (this file)
+├── main.py                      # Main script to launch the application
+└── requirements.txt             # Python dependencies for development purposes
+```
 
 ---
 
