@@ -217,7 +217,6 @@ Make sure the project structure is correct with all the necessary helper modules
 Use the following command to create the `main.exe` executable:
 
 ```bash
-```
 pyinstaller ^
   --onedir ^
   --name main ^
