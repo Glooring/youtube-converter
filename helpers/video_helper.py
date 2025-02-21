@@ -5,12 +5,17 @@ import subprocess
 import tkinter as tk
 from tkinter import messagebox
 from pytubefix import YouTube
-from helpers.utils import sanitize_filename, get_ffmpeg_path, show_success_message
+from helpers.utils import sanitize_filename, get_ffmpeg_path, get_token_file_path, show_success_message
 
 # ----------------- Video Download Functions -----------------
 def get_available_resolutions(youtube_link):
     try:
-        yt = YouTube(youtube_link)
+        yt = YouTube(
+            youtube_link,
+            client='WEB_EMBEDDED_PLAYER',
+            use_po_token=True,
+            token_file= get_token_file_path()
+        )
         video_streams = yt.streams.filter(file_extension='mp4', progressive=False).order_by('resolution').desc()
 
         unique_resolutions = []
@@ -28,7 +33,12 @@ def get_available_resolutions(youtube_link):
 
 def download_video(youtube_link, selected_stream, output_dir, progress_var, progress_text_widget):
     try:
-        yt = YouTube(youtube_link)
+        yt = YouTube(
+            youtube_link,
+            client='WEB_EMBEDDED_PLAYER',
+            use_po_token=True,
+            token_file= get_token_file_path()
+        )
         sanitized_title = sanitize_filename(yt.title)
         progress_text_widget.config(state=tk.NORMAL)
         progress_text_widget.insert(tk.END, "Downloading video...\n")
@@ -46,7 +56,12 @@ def download_video(youtube_link, selected_stream, output_dir, progress_var, prog
 
 def download_audio(youtube_link, output_dir, progress_var, progress_text_widget):
     try:
-        yt = YouTube(youtube_link)
+        yt = YouTube(
+            youtube_link,
+            client='WEB_EMBEDDED_PLAYER',
+            use_po_token=True,
+            token_file= get_token_file_path()
+        )
 
         # Get the audio stream with the highest available bitrate
         audio_stream = yt.streams.filter(only_audio=True).order_by('abr').desc().first()
@@ -55,7 +70,6 @@ def download_audio(youtube_link, output_dir, progress_var, progress_text_widget)
         progress_text_widget.config(state=tk.DISABLED)
         progress_var.set(30)
 
-        # Download the audio stream
         sanitized_title = sanitize_filename(yt.title)
         audio_file = audio_stream.download(output_path=output_dir, filename=f"{sanitized_title}_audio")
         progress_var.set(60)
@@ -74,9 +88,8 @@ def merge_video_and_audio_simple(video_file, audio_file, output_file, progress_t
         progress_text_widget.insert(tk.END, "Merging video and audio...\n")
         progress_text_widget.config(state=tk.DISABLED)
         
-        ffmpeg_path = get_ffmpeg_path()  # Get the path to the ffmpeg.exe in data\_internal\ffmpeg
+        ffmpeg_path = get_ffmpeg_path()
         command = f'"{ffmpeg_path}" -y -i "{video_file}" -i "{audio_file}" -c:v copy -c:a aac "{output_file}"'
-
         
         subprocess.run(command, shell=True, check=True)
         progress_text_widget.config(state=tk.NORMAL)
@@ -87,12 +100,12 @@ def merge_video_and_audio_simple(video_file, audio_file, output_file, progress_t
         os.remove(video_file)
         os.remove(audio_file)
         
-        normalized_mp4_file = os.path.normpath(normalized_mp4_file)  # Normalize the file path to use consistent slashes
+        normalized_mp4_file = os.path.normpath(normalized_mp4_file)
         return normalized_mp4_file
     except Exception as e:
         progress_text_widget.config(state=tk.NORMAL)
         progress_text_widget.insert(tk.END, f"Merging failed: {e}\n")
-        progress_text_widget.config(state=tk.DISABLED)   
+        progress_text_widget.config(state=tk.DISABLED)
 
 def start_process_video(youtube_link, resolution_choice, output_dir, progress_var, progress_text_widget, loading_window):
     resolutions, video_streams = get_available_resolutions(youtube_link)
@@ -116,7 +129,15 @@ def start_process_video(youtube_link, resolution_choice, output_dir, progress_va
         loading_window.destroy()
         return
 
-    output_file = os.path.join(output_dir, f"{sanitize_filename(YouTube(youtube_link).title)}_{selected_resolution}.mp4")
+    from pytubefix import YouTube as YTCheck  # local import to avoid confusion
+    title_yt = YTCheck(
+        youtube_link,
+        client='WEB_EMBEDDED_PLAYER',
+        use_po_token=True,
+        token_file= get_token_file_path()
+    ).title
+    
+    output_file = os.path.join(output_dir, f"{sanitize_filename(title_yt)}_{selected_resolution}.mp4")
     merged_file = merge_video_and_audio_simple(video_file, audio_file, output_file, progress_text_widget)
 
     progress_var.set(100)
@@ -134,9 +155,14 @@ def start_process_video(youtube_link, resolution_choice, output_dir, progress_va
 
 def get_highest_resolution(youtube_link):
     try:
-        yt = YouTube(youtube_link)
+        yt = YouTube(
+            youtube_link,
+            client='WEB_EMBEDDED_PLAYER',
+            use_po_token=True,
+            token_file= get_token_file_path()
+        )
         video_streams = yt.streams.filter(file_extension='mp4').order_by('resolution').desc()
         highest_resolution = video_streams.first()
         return highest_resolution
-    except Exception as e:
+    except Exception:
         return None

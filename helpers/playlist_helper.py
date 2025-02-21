@@ -5,13 +5,18 @@ import subprocess
 import tkinter as tk
 from datetime import datetime
 from pytubefix import Playlist, YouTube
-from helpers.utils import sanitize_filename, get_ffmpeg_path, show_success_message
+from helpers.utils import sanitize_filename, get_ffmpeg_path, get_token_file_path, show_success_message
 from helpers.audio_helper import download_audio_as_mp3
 from helpers.video_helper import get_highest_resolution, download_video, download_audio
 
 # ----------------- Playlist Download Functions -----------------
 def download_playlist_audio(playlist_url, output_dir, progress_var, progress_text_widget):
-    playlist = Playlist(playlist_url)
+    playlist = Playlist(
+        playlist_url,
+        client='WEB_EMBEDDED_PLAYER',
+        use_po_token=True,
+        token_file= get_token_file_path()
+    )
 
     # Generate a timestamp in the format yyyyMMdd_HHmmss_SSS
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
@@ -42,7 +47,12 @@ def download_playlist_audio(playlist_url, output_dir, progress_var, progress_tex
     return playlist_dir
 
 def download_playlist_video(playlist_url, output_dir, progress_var, progress_text_widget):
-    playlist = Playlist(playlist_url)
+    playlist = Playlist(
+        playlist_url,
+        client='WEB_EMBEDDED_PLAYER',
+        use_po_token=True,
+        token_file= get_token_file_path()
+    )
 
     # Generate a timestamp in the format yyyyMMdd_HHmmss_SSS
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
@@ -70,7 +80,7 @@ def download_playlist_video(playlist_url, output_dir, progress_var, progress_tex
                 progress_text_widget.config(state=tk.DISABLED)
                 continue
 
-           # Extract resolution (e.g., 1080p) from the stream
+            # Extract resolution (e.g., 1080p) from the stream
             resolution = highest_res_stream.resolution
 
             # Download video without audio
@@ -113,10 +123,9 @@ def merge_video_and_audio_playlist(video_file, audio_file, output_file, progress
         progress_text_widget.insert(tk.END, "Merging video and audio...\n")
         progress_text_widget.config(state=tk.DISABLED)
         
-        ffmpeg_path = get_ffmpeg_path()  # Get the path to the ffmpeg.exe in data\_internal\ffmpeg
+        ffmpeg_path = get_ffmpeg_path()
         command = f'"{ffmpeg_path}" -y -i "{video_file}" -i "{audio_file}" -c:v copy -c:a aac "{output_file}"'
 
-        
         subprocess.run(command, shell=True, check=True)
         progress_var.set(90)
         progress_text_widget.config(state=tk.NORMAL)
@@ -132,4 +141,3 @@ def merge_video_and_audio_playlist(video_file, audio_file, output_file, progress
         progress_text_widget.config(state=tk.NORMAL)
         progress_text_widget.insert(tk.END, f"Merging failed: {e}\n")
         progress_text_widget.config(state=tk.DISABLED)
-        

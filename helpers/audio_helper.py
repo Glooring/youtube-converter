@@ -4,12 +4,17 @@ import os
 import subprocess
 import tkinter as tk
 from pytubefix import YouTube
-from helpers.utils import sanitize_filename, get_ffmpeg_path, show_success_message
+from helpers.utils import sanitize_filename, get_ffmpeg_path, get_token_file_path, show_success_message
 
 # Function to download audio and convert to mp3
 def download_audio_as_mp3(youtube_link, output_dir, progress_var, progress_text_widget, override=False):
     try:
-        yt = YouTube(youtube_link)
+        yt = YouTube(
+            youtube_link,
+            client='WEB_EMBEDDED_PLAYER',
+            use_po_token=True,
+            token_file= get_token_file_path()
+        )
         
         # Get the highest bitrate audio stream
         audio_stream = yt.streams.filter(only_audio=True).order_by('abr').desc().first()
@@ -29,7 +34,7 @@ def download_audio_as_mp3(youtube_link, output_dir, progress_var, progress_text_
         progress_text_widget.config(state=tk.DISABLED)
         mp3_file = os.path.join(output_dir, f"{sanitized_title}.mp3")
         
-        ffmpeg_path = get_ffmpeg_path()  # Get the path to the ffmpeg.exe in data\_internal\ffmpeg
+        ffmpeg_path = get_ffmpeg_path()  # Get the path to the ffmpeg.exe
         command = f'"{ffmpeg_path}" -y -i "{audio_file}" -vn -ar 44100 -ac 2 -b:a 192k "{mp3_file}"'
         
         subprocess.run(command, shell=True, check=True)
@@ -49,7 +54,12 @@ def download_audio_as_mp3(youtube_link, output_dir, progress_var, progress_text_
 # Function to download audio without conversion (raw format)
 def download_raw_audio(youtube_link, output_dir, progress_var, progress_text_widget):
     try:
-        yt = YouTube(youtube_link)
+        yt = YouTube(
+            youtube_link,
+            client='WEB_EMBEDDED_PLAYER',
+            use_po_token=True,
+            token_file= get_token_file_path()
+        )
         
         # Get the highest bitrate audio stream
         audio_stream = yt.streams.filter(only_audio=True).order_by('abr').desc().first()
