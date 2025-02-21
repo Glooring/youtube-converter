@@ -187,8 +187,10 @@ The project is divided into several components for better organization and modul
 YouTube-Converter/
 │
 ├── helpers/                     # Folder containing helper modules
-│   ├── ffmpeg/                      # FFmpeg folder (for development mode
-│   │	└── ffmpeg.exe               # FFmpeg executable (unzip ffmpeg.zip here))
+│   ├── ffmpeg/                  # FFmpeg folder (for development mode
+│   │	└── ffmpeg.exe           # FFmpeg executable (unzip ffmpeg.zip here))
+│   ├── token_file/              # Folder containing token configuration
+│   │	└── token_file.json      # Stores API tokens for authentication and secure access  
 │   ├── audio_helper.py          # Handles audio downloads and conversion
 │   ├── video_helper.py          # Manages video downloads and resolution selection
 │   ├── playlist_helper.py       # Handles playlist downloads (both video and audio)
@@ -215,14 +217,22 @@ Make sure the project structure is correct with all the necessary helper modules
 Use the following command to create the `main.exe` executable:
 
 ```bash
-pyinstaller --onedir --name main --hidden-import=helpers.audio_helper --hidden-import=helpers.playlist_helper --hidden-import=helpers.video_helper --hidden-import=helpers.utils --noconsole main.py
+```
+pyinstaller ^
+  --onedir ^
+  --name main ^
+  --hidden-import=helpers.audio_helper ^
+  --hidden-import=helpers.playlist_helper ^
+  --hidden-import=helpers.video_helper ^
+  --hidden-import=helpers.utils ^
+  --add-data "helpers/token_file/token_file.json;helpers/token_file" ^
+  --add-data "helpers/ffmpeg/ffmpeg.exe;helpers/ffmpeg" ^
+  --noconsole ^
+  main.py
 ```
 
-This will create a `dist/` folder containing a `main/` directory, which holds the `main.exe` executable along with the necessary dependencies from the `_internal` folder.
-
-### 3. Unarchive `ffmpeg.zip`
-
-Before running the executable, unzip the `ffmpeg.zip` file located in `dist/main/_internal/helpers/ffmpeg/` to ensure that `ffmpeg.exe` is available for the application to use.
+> **Explanation:**  
+> - The `--add-data` parameters ensure that both the **token_file.json** (for configuration/authentication) and the **ffmpeg.exe** (for multimedia processing) are bundled with the executable.  
 
 ---
 
